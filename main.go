@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -9,8 +10,16 @@ import (
 )
 
 func main() {
+	flagDecode := flag.Bool("d", false, "Decode the text send in stdin.")
+	flagEncode := flag.Bool("e", false, "Encode the text send in stdin.")
+
+	flag.Parse()
 	input := getInput()
-	fmt.Printf("%s", encode(input))
+	if *flagDecode == true && *flagEncode == false {
+		fmt.Printf("%s", decode(input))
+	} else if *flagDecode == false && *flagEncode == true {
+		fmt.Printf("%s", encode(input))
+	}
 }
 
 func getInput() string {
